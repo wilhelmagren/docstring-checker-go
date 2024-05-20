@@ -5,17 +5,31 @@ package main
 
 import (
     "log"
+    "fmt"
     "os"
-    "github.com/wilhelmagren/docstring-checker-go/pkg/oswalk/oswalk"
+    "github.com/wilhelmagren/docstring-checker-go/pkg/checker"
+    "github.com/wilhelmagren/docstring-checker-go/pkg/oswalk"
 )
 
 func main() {
-    if len(os.Args) != 1 {
-        log.Println("[ERROR] you need to provide at least one argument, the path to search from!");
+    if len(os.Args) != 2 {
+        log.Println("[ERROR] you need to provide at least one argument which is the path to search from!");
+        os.Exit(1);
     }
 
-    root := os.Args[0];
+    root := os.Args[1];
 
-    files := oswalk.find_go_files(root);
-    log.Println(files);
+    files := oswalk.FindGoFiles(root);
+    invalidFiles := checker.CheckDocstrings(files);
+
+    numInvalidFiles := len(invalidFiles);
+
+    if numInvalidFiles > 0 {
+        fmt.Printf("\n 💥 You had %d file(s) with outdated docstring(s)!\n", numInvalidFiles);
+        for _, file := range invalidFiles {
+            fmt.Printf("    - %s\n", file);
+        }
+    } else {
+        fmt.Println("\n 🎉 You had no files with outdated docstrings, good job!");
+    }
 }
