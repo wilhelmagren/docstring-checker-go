@@ -1,26 +1,28 @@
-//
-//
+// File created: 2024-05-20
+// Last updated: 2024-05-20
 
 package oswalk
 
 import (
     "io/fs"
     "log"
+    "os"
     "path/filepath"
 )
 
-func find_go_files(root string) (files []string) {
+func FindGoFiles(root string) []string {
     var files []string;
-    filepath.WalkDir(root, func(p string, d fs.DirEntry, e error) error {
+    err := filepath.WalkDir(root, func(p string, d fs.DirEntry, e error) error {
         if e != nil { return e; }
-        if filepath.Ext(d.Name() == "go" {
-            a = append(a, p);
+        if filepath.Ext(d.Name()) == ".go" {
+            files = append(files, p);
         };
         return nil;
-    }));
+    });
 
     if err != nil {
-        log.Println("[ERROR] ", err);
+        log.Fatal(err);
+        os.Exit(1);
     }
 
     return files;
