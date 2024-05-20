@@ -13,8 +13,7 @@ import (
 
 func main() {
     if len(os.Args) != 2 {
-        log.Println("[ERROR] you need to provide at least one argument which is the path to search from!");
-        os.Exit(1);
+        log.Fatal("You need to provide exactly one argument which is the path to search from!");
     }
 
     root := os.Args[1];
