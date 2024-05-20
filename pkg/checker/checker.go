@@ -15,7 +15,6 @@ func CheckDocstrings(files []string) []string {
         contents, err := os.ReadFile(file);
         if err != nil {
             log.Fatal(err);
-            os.Exit(1);
         }
         body := string(contents);
 
@@ -28,7 +27,6 @@ func CheckDocstrings(files []string) []string {
 
                     if err != nil {
                         log.Fatal(err);
-                        os.Exit(1);
                     }
 
                     modificationTime := fileInfo.ModTime().Format("2006-01-02");

@@ -6,7 +6,6 @@ package oswalk
 import (
     "io/fs"
     "log"
-    "os"
     "path/filepath"
 )
 
@@ -22,7 +21,6 @@ func FindGoFiles(root string) []string {
 
     if err != nil {
         log.Fatal(err);
-        os.Exit(1);
     }
 
     return files;
